@@ -1,7 +1,7 @@
 "use strict";
 // Bei jeder Änderung an der App die Version erhöhen, sonst bleibt die alte im Speicher.
-const CACHE = "taster-rad-v3";
-const FILES = ["./", "index.html", "design.css", "css/style.css", "js/app.js", "manifest.webmanifest",
+const CACHE = "taster-rad-v4";
+const FILES = ["./", "index.html", "design.css", "css/style.css", "js/szenen.js", "js/app.js", "manifest.webmanifest",
   "schriften/andika-400.woff2", "schriften/andika-700.woff2", "icon-180.png", "icon-192.png", "icon-512.png"];
 
 self.addEventListener("install", e => {

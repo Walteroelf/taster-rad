@@ -2,39 +2,65 @@
 @font-face { font-family: "Andika"; font-weight: 400; font-display: swap; src: url("../schriften/andika-400.woff2") format("woff2"); }
 @font-face { font-family: "Andika"; font-weight: 700; font-display: swap; src: url("../schriften/andika-700.woff2") format("woff2"); }
 [hidden] { display: none !important; }
-body { background: var(--hg); min-height: 100dvh; display: flex; flex-direction: column; -webkit-tap-highlight-color: transparent; }
-h1, h2 { margin: 0; line-height: 1.2; }
-.markise { background: var(--karte); border-bottom: 2px solid var(--linie); padding-top: env(safe-area-inset-top, 0px); }
-.markise::before { content: ""; display: block; height: 12px; background: linear-gradient(90deg,
-  var(--hellblau) 0 14.28%, var(--blau) 0 28.57%, var(--gruen) 0 42.85%, var(--hellgruen) 0 57.14%,
-  var(--gelb) 0 71.42%, var(--orange) 0 85.71%, var(--silber) 0); }
-.kopf { display: flex; flex-wrap: wrap; align-items: center; gap: var(--a-2); padding: 12px 16px; }
-.kopf h1 { font-size: clamp(22px, 4.5vw, 34px); }
-.platz { flex: 1; }
-main { flex: 1; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--a-3); padding: var(--a-2); }
-#wheel { width: min(94vw, 76dvh); height: auto; aspect-ratio: 1; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
-body.touch #wheel { cursor: pointer; touch-action: manipulation; }
-.seite { display: grid; gap: var(--a-2); width: min(94vw, 320px); text-align: center; }
-.ergebnis { background: var(--karte); border: 2px solid var(--linie); border-radius: var(--rundung-gross); padding: var(--a-3) var(--a-2); font-size: var(--gr-3); min-height: 160px; display: grid; place-content: center; justify-items: center; gap: var(--a-1); overflow-wrap: anywhere; }
-.ergebnis.fertig { background: var(--gelb); color: var(--dunkelblau); border-color: var(--dunkelblau); }
-.ergebnis img, .ergebnis svg { width: 110px; height: 110px; object-fit: contain; }
-.ergebnis small { font-size: var(--gr-1); }
-.drehen { min-height: 96px; font-size: var(--gr-4); touch-action: manipulation; user-select: none; -webkit-user-select: none; }
-@media (orientation: portrait) { #wheel { width: min(94vw, 100dvh - 440px); min-width: 280px; } }
-.leise-text { color: var(--leise); margin: 0; }
-dialog { width: min(94vw, 640px); max-height: 90dvh; border: 2px solid var(--rand); border-radius: var(--rundung-gross); background: var(--karte); color: var(--text); padding: var(--a-3); }
+body { background: var(--hg); -webkit-tap-highlight-color: transparent; overflow: hidden; }
+h2 { margin: 0; line-height: 1.2; }
+
+/* ---------- Spielbildschirm: nur die Szene ---------- */
+#play { height: 100dvh; display: flex; flex-direction: column; gap: var(--a-2);
+  padding: calc(env(safe-area-inset-top, 0px) + 72px) var(--a-2) calc(env(safe-area-inset-bottom, 0px) + var(--a-2));
+  user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; touch-action: manipulation; }
+body.touch #play { cursor: pointer; }
+#scene { flex: 1; min-height: 0; position: relative; }
+#scene > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+#result { height: clamp(88px, 18dvh, 160px); display: flex; align-items: center; justify-content: center; gap: var(--a-3); font-size: clamp(36px, 9dvh, 80px); font-weight: 700; line-height: 1.1; text-align: center; overflow: hidden; }
+#result.fertig { background: var(--gelb); color: var(--dunkelblau); border-radius: var(--rundung-gross); align-self: center; min-width: min(100%, 320px); padding: 0 var(--a-3); }
+#result img, #result svg { height: 80%; width: auto; aspect-ratio: 1; object-fit: contain; }
+
+.lichtfeld { position: absolute; inset: 0; display: grid; gap: 12px; place-content: center; }
+.licht { --feldfarbe: var(--weiss); background: var(--feldfarbe); color: var(--dunkelblau); border: 2px solid var(--silber); border-radius: var(--rundung-gross); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6%; min-width: 0; overflow: hidden; }
+.licht svg { flex: 1; min-height: 0; width: 100%; }
+.licht span { font-size: clamp(14px, 3dvh, 28px); }
+.licht.an { background: var(--gelb); border: 10px solid var(--dunkelblau); }
+.licht.gezogen { opacity: .25; }
+.lichtfeld.fertig .licht:not(.an) { opacity: .3; }
+
+#gear { position: fixed; top: calc(env(safe-area-inset-top, 0px) + 12px); right: 12px; width: 52px; height: 52px; border-radius: 50%; border: 2px solid var(--rand); background: var(--karte); display: grid; place-items: center; padding: 0; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; touch-action: none; }
+#gear.haelt { background: conic-gradient(var(--gelb) var(--anteil, 0%), var(--karte) 0); color: var(--dunkelblau); }
+#lockRing { position: fixed; top: calc(env(safe-area-inset-top, 0px) + 22px); left: 22px; width: 32px; height: 32px; border-radius: 50%; background: conic-gradient(var(--silber) var(--anteil, 0%), transparent 0); border: 2px solid var(--silber); }
+
+/* ---------- Lehrkraft-Bereich ---------- */
+dialog { width: min(96vw, 760px); max-height: 92dvh; border: 2px solid var(--rand); border-radius: var(--rundung-gross); background: var(--karte); color: var(--text); padding: var(--a-3); }
 dialog::backdrop { background: rgb(13 43 78 / .6); }
-.dialog-kopf { display: flex; justify-content: space-between; align-items: center; }
+.dialog-kopf { display: flex; justify-content: space-between; align-items: center; gap: var(--a-2); margin-bottom: var(--a-2); }
+#tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--a-2); }
+.kachel { display: flex; flex-direction: column; gap: var(--a-1); }
+.kachel button { border: 2px solid var(--rand); border-radius: var(--rundung); background: var(--karte); min-height: 48px; }
+.kachel .start { display: flex; flex-direction: column; align-items: center; padding: var(--a-2) var(--a-1); flex: 1; overflow-wrap: anywhere; }
+.kachel .start svg { width: 64px; height: 64px; }
+.kachel.aktiv .start { background: var(--auswahl); border-width: 4px; }
+.kachel.neu button { flex: 1; border-style: dashed; min-height: 160px; }
+details { margin-top: var(--a-3); }
+summary { min-height: 48px; display: flex; align-items: center; cursor: pointer; font-weight: 700; }
+summary::after { content: "+"; margin-left: var(--a-1); }
+details[open] summary::after { content: "–"; }
+.gruppe { display: grid; gap: var(--a-1); }
 fieldset { border: 2px solid var(--linie); border-radius: var(--rundung); margin: var(--a-2) 0 0; display: grid; gap: var(--a-2); min-width: 0; }
 legend { font-weight: 700; padding: 0 var(--a-1); }
+.auswahl { display: flex; flex-wrap: wrap; gap: var(--a-1); }
+.auswahl button { flex: 1 1 160px; min-height: 64px; border: 2px solid var(--rand); border-radius: var(--rundung); background: var(--karte); padding: var(--a-1); }
+.auswahl button[aria-pressed=true] { background: var(--app-akzent); color: var(--dunkelblau); border-color: var(--dunkelblau); border-width: 4px; }
 label { display: flex; flex-wrap: wrap; align-items: center; gap: var(--a-1); min-height: 48px; }
 input[type=checkbox] { width: 28px; height: 28px; accent-color: var(--app-akzent); }
 input[type=range] { flex: 1 1 200px; min-height: 48px; accent-color: var(--app-akzent); }
-select, input[type=text] { min-height: 48px; border: 2px solid var(--rand); border-radius: var(--rundung); background: var(--karte); padding: 0 var(--a-1); }
-.test { background: var(--flaeche-2); border-radius: var(--rundung); padding: var(--a-2); margin: 0; }
-.test.down { background: var(--gelb); color: var(--dunkelblau); }
+select, input[type=text] { min-height: 48px; border: 2px solid var(--rand); border-radius: var(--rundung); background: var(--karte); padding: 0 var(--a-1); max-width: 100%; }
+#own { display: grid; gap: var(--a-1); }
 .feld { display: flex; gap: var(--a-1); align-items: center; margin-bottom: var(--a-1); }
 .feld input[type=text] { flex: 1; min-width: 0; }
 .feld img { width: 48px; height: 48px; object-fit: cover; border-radius: 8px; }
 .feld .knopf { min-height: 48px; padding: 0 12px; }
 .feld input[type=file] { display: none; }
+.reihe { display: flex; flex-wrap: wrap; gap: var(--a-2); margin-top: var(--a-3); }
+.test { background: var(--flaeche-2); border-radius: var(--rundung); padding: var(--a-2); margin: 0; }
+.test.down { background: var(--gelb); color: var(--dunkelblau); }
+.leise-text { color: var(--leise); margin: var(--a-2) 0 0; font-size: 16px; }
+#message { position: sticky; bottom: 0; margin: 0; color: var(--hinweis-text); background: var(--karte); }
