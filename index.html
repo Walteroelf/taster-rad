@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Drehrad</title>
+<meta name="apple-mobile-web-app-title" content="Drehrad">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="stylesheet" href="design.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="markise"><div class="kopf">
+  <h1>Drehrad</h1>
+  <span class="platz"></span>
+  <button id="reset" class="knopf leise" hidden>Alle Felder zurück</button>
+  <button id="openSettings" class="knopf leise">
+    <svg class="symbol" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
+    Einstellungen
+  </button>
+</div></header>
+
+<main id="stage">
+  <svg id="wheel" viewBox="-210 -210 420 420" role="img" aria-label="Drehrad"></svg>
+  <div class="seite">
+    <div id="result" class="ergebnis" aria-live="polite">Drücke den Taster.</div>
+    <button id="spin" class="knopf drehen">Drehen</button>
+    <p id="status" class="leise-text"></p>
+    <p id="offline" class="leise-text"></p>
+  </div>
+</main>
+
+<dialog id="settings">
+  <div class="dialog-kopf"><h2>Einstellungen</h2><button id="closeSettings" class="knopf">Fertig</button></div>
+
+  <fieldset><legend>Ansteuerung</legend>
+    <label class="wahl"><input type="checkbox" id="screenTap"> Rad und Knopf antippen (Touch)</label>
+    <label class="wahl"><input type="checkbox" id="useSwitch"> Taster per Kabel-Adapter oder Bluetooth</label>
+    <label>Auslösen <select id="trigger"><option value="press">beim Drücken</option><option value="release">beim Loslassen</option></select></label>
+    <label class="wahl"><input type="checkbox" id="anyKey"> Jede Taste zählt</label>
+    <button id="learn" class="knopf leise">Taste lernen</button>
+    <p id="switchTest" class="test">Taster testen: einfach drücken.</p>
+  </fieldset>
+
+  <fieldset><legend>Drehen</legend>
+    <label>Drehdauer: <output id="durationOut"></output> <input type="range" id="duration" min="2" max="10" step="1"></label>
+    <label>Sperrzeit ab dem Druck: <output id="lockOut"></output> <input type="range" id="lock" min="0" max="15" step="1"></label>
+    <label class="wahl"><input type="checkbox" id="innerOn"> Innere Scheibe dreht mit (wie beim Gerät)</label>
+    <label class="wahl"><input type="checkbox" id="skipDrawn"> Gezogene Felder auslassen</label>
+    <label class="wahl"><input type="checkbox" id="sound"> Klicken beim Drehen</label>
+    <label class="wahl"><input type="checkbox" id="speak"> Ergebnis vorlesen</label>
+  </fieldset>
+
+  <fieldset><legend>Vorlagen</legend>
+    <label>Außenring <select id="outerSelect"></select></label>
+    <label>Innere Scheibe <select id="innerSelect"></select></label>
+  </fieldset>
+
+  <fieldset><legend>Eigene Vorlage</legend>
+    <p class="leise-text">2 bis 26 Felder, mit Text oder Bild. Alles bleibt auf diesem Gerät.</p>
+    <div id="fields"></div>
+    <div class="reihe">
+      <button id="addField" class="knopf leise">Feld dazu</button>
+    </div>
+  </fieldset>
+</dialog>
+<script src="js/app.js"></script>
+</body>
+</html>
