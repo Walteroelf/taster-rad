@@ -1,5 +1,5 @@
 "use strict";
-// Drehrad: Nachbau der Funktionen eines tastergesteuerten Zufallsdrehers (Prototyp).
+// Taster-Rad: Nachbau der Funktionen eines tastergesteuerten Zufallsdrehers (Prototyp).
 const $ = id => document.getElementById(id);
 const NS = "http://www.w3.org/2000/svg";
 const COLORS = ["#4DB2E6", "#FFD100", "#A6D27A", "#F39200", "#FFFFFF", "#46A84A", "#B9C1C8"];
@@ -18,7 +18,7 @@ const DEFAULTS = {
   duration: 5, lock: 8, innerOn: true, skipDrawn: false, sound: true, speak: false,
   outer: "dice", inner: "dice", own: items(["A", "B", "C"]),
 };
-const STORE = "drehrad-v1";
+const STORE = "taster-rad-v1";
 let settings = { ...DEFAULTS };
 try { Object.assign(settings, JSON.parse(localStorage.getItem(STORE) || "{}")); } catch {}
 function save() {

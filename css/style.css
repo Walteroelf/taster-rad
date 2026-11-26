@@ -1,4 +1,4 @@
-/* Drehrad: App-eigenes. Farben und Grundregeln aus design.css (nicht ändern). */
+/* Taster-Rad: App-eigenes. Farben und Grundregeln aus design.css (nicht ändern). */
 @font-face { font-family: "Andika"; font-weight: 400; font-display: swap; src: url("../schriften/andika-400.woff2") format("woff2"); }
 @font-face { font-family: "Andika"; font-weight: 700; font-display: swap; src: url("../schriften/andika-700.woff2") format("woff2"); }
 [hidden] { display: none !important; }

@@ -1,5 +1,5 @@
 {
-  "name": "Drehrad", "short_name": "Drehrad", "lang": "de",
+  "name": "Taster-Rad", "short_name": "Taster-Rad", "lang": "de",
   "start_url": "./", "scope": "./", "display": "standalone",
   "background_color": "#EEF5FA", "theme_color": "#4DB2E6",
   "icons": [

@@ -1,4 +1,4 @@
-# Drehrad (Prototyp)
+# Taster-Rad (Prototyp)
 
 Tastergesteuertes Zufallsrad für den Unterricht, nutzbar am iPad per Touch oder mit einem Taster
 (Kabel-Adapter oder Bluetooth, meldet sich als Tastatur). Läuft nach dem ersten Öffnen offline.
